@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: eureka-api-getway
+
+server:
+  port: 1101
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1001/eureka/
+
+zuul:
+  routes:
+    api-consumer:
+      path: /api-consumer/**
+      serviceId: eureka-consumer
+    api-consumerfeign:
+      path: /api-consumerfeign/**
+      serviceId: eureka-consumer-feign
+
