@@ -20,8 +20,6 @@ public class DcController {
      */
     @RequestMapping(value = "/hello",method = RequestMethod.GET)
     public String hello() {
-        //String services = "Services: " + discoveryClient.getServices();
-        //System.out.println(services);
         return "hello,我是eureka-client";
     }
 }
