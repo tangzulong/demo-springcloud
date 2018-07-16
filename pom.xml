@@ -9,7 +9,7 @@
 	<modules>
 		<module>eureka-common</module>
 	</modules>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>demo-springcloud</name>
 	<description>Demo project for Spring Boot</description>

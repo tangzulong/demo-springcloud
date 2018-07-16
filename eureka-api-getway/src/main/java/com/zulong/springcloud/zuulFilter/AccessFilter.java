@@ -1,9 +1,12 @@
 package com.zulong.springcloud.zuulFilter;
 
+import com.fasterxml.jackson.core.filter.TokenFilter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,9 +69,8 @@ public class AccessFilter extends ZuulFilter{
         logger.info("send {} request to {}", request.getMethod(), request.getRequestURL().toString());
 
         //获取传来的参数accessToken
-        Object accessToken = request.getParameter("accessToken");
-        accessToken="aa";
-        if(accessToken == null) {
+        String accessToken = String.valueOf(request.getParameter("accessToken"));
+        if(StringUtils.isBlank(accessToken)) {
             logger.warn("access token is empty");
             //过滤该请求，不往下级服务去转发请求，到此结束
             ctx.setSendZuulResponse(false);
@@ -77,6 +79,10 @@ public class AccessFilter extends ZuulFilter{
             ctx.getResponse().setContentType("text/html;charset=UTF-8");
             return null;
         }
+        //对请求进行路由
+        ctx.setSendZuulResponse(true);
+        ctx.setResponseStatusCode(200);
+        ctx.set("isSuccess", true);
         //如果有token，则进行路由转发
         logger.info("access token ok");
         //这里return的值没有意义，zuul框架没有使用该返回值

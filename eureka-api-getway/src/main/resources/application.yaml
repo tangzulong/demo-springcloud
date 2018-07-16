@@ -1,7 +1,11 @@
 spring:
   application:
     name: eureka-api-getway
-
+  zipkin:
+    base-url: http://localhost:1106
+  sleuth:
+    sampler:
+     percentage: 1.0  #全部都需要
 server:
   port: 1101
 eureka:
@@ -12,9 +16,12 @@ eureka:
 zuul:
   routes:
     api-consumer:
-      path: /api-consumer/**
-      serviceId: eureka-consumer
+      path: /api-client/**      #映射服务的前置路径
+      serviceId: eureka-client  #服务名
     api-consumerfeign:
-      path: /api-consumerfeign/**
+      path: /api-feign/**
       serviceId: eureka-consumer-feign
+    api-client:
+      path: /client/**
+      serviceId: eureka-client
 
